@@ -5,18 +5,17 @@
   },
   "apps": [
     {
-      "root": "src/www",
+      "root": "www",
       "outDir": "dist",
       "assets": [
-        "www/assets",
-        "www/favicon.ico"
+        "assets",
+        "favicon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
         "styles.css",
@@ -32,18 +31,9 @@
       }
     }
   ],
-  "e2e": {
-    "protractor": {
-      "config": "./protractor.conf.js"
-    }
-  },
   "lint": [
     {
       "project": "src/www/tsconfig.app.json",
-      "exclude": "**/node_modules/**"
-    },
-    {
-      "project": "src/www/tsconfig.spec.json",
       "exclude": "**/node_modules/**"
     },
     {
@@ -51,11 +41,6 @@
       "exclude": "**/node_modules/**"
     }
   ],
-  "test": {
-    "karma": {
-      "config": "./karma.conf.js"
-    }
-  },
   "defaults": {
     "styleExt": "css",
     "component": {}
