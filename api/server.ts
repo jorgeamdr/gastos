@@ -441,6 +441,10 @@ app.get('*', (req, res, next) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+app.use((err, req, res, next) => {
+    res.sendStatus(500);
+});
+
 
 const port = process.env.PORT || '8123';
 app.set('port', port);
