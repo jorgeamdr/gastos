@@ -90,7 +90,7 @@ apiRouter.get('/gastos-diarios', (req, res, next) => {
         gastos.forEach(g => {
             const dia = moment(g.Fecha);
 
-            if (!gastosDias.includes(dia.format('YYYY-MM-DD'))) {
+            if (gastosDias.indexOf(dia.format('YYYY-MM-DD')) !== -1) {
                 gastosDias.push(dia.format('YYYY-MM-DD'));
             } else {
             }

@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/api/server.ts',
+    entry: './api/server.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'server-bundle.js'
