@@ -1,0 +1,58 @@
+<ngb-tabset>
+    <ngb-tab title="Gastos">
+        <ng-template ngbTabContent>
+            <div class="form-group">
+              <label class="control-label col-md-2">Fecha</label>
+              <div class="col-md-10">
+                <input class="form-control" type="datetime-local" [(ngModel)]="gasto.fecha"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-2">Descripcion</label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" [(ngModel)]="gasto.descripcion"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-2">Importe</label>
+              <div class="col-md-10">
+                <input class="form-control" type="number" step="0.01" [(ngModel)]="gasto.importe"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-2">Categoría</label>
+              <div class="col-md-10">
+                <select class="form-control" [(ngModel)]="gasto.categoria">
+                    <option value="">SELECCIONA</option>
+                    <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria.nombre}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-2">Cuenta</label>
+              <div class="col-md-10">
+                <select class="form-control" [(ngModel)]="gasto.cuenta">
+                    <option value="">SELECCIONA</option>
+                    <option *ngFor="let cuenta of cuentas" [value]="cuenta">{{cuenta.nombre}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-2">Persona</label>
+              <div class="col-md-10">
+                <select class="form-control" [(ngModel)]="gasto.persona">
+                    <option value="">SELECCIONA</option>
+                    <option *ngFor="let persona of personas" [value]="persona">{{persona.nombre}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-2">¿No planeado?</label>
+              <div class="col-md-10">
+                <input class="form-control" type="check" [(ngModel)]="gasto.esEspecial"/>
+              </div>
+            </div>
+            <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>

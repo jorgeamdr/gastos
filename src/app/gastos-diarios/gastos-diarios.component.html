@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th style = "text-align: right">Gastos contemplados</th>
+        <th style = "text-align: right">Gastos totales</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gasto of gastos">
+        <td>{{ gasto.Fecha | date:'dd-MM-yyyy'}}</td>
+        <td style = "text-align: right">{{ gasto.GastosNoEspeciales | currency:'MXN':true }}</td>
+        <td style = "text-align: right">{{ gasto.Gastos | currency:'MXN':true }}</td>
+      </tr>
+    </tbody>
+  </table>

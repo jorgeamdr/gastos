@@ -1,0 +1,56 @@
+<div>
+    <label>Fecha inicio</label>
+    <input type="date" [(ngModel)]="filtro.fechaInicio" (change)="cargarGastos()"/>
+    <label>Fecha fin</label>
+    <input type="date" [(ngModel)]="filtro.fechaFin" (change)="cargarGastos()"/>
+<!--
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th style = "text-align: right">Saldo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dia of dias">
+        <td>{{ dia.fecha | date:'dd-MM-yyyy'}}</td>
+        <td style = "text-align: right">{{ dia.saldo | currency:'MXN':true }}</td>
+      </tr>
+    </tbody>
+  </table>-->
+
+  <div style="position: relative; height: 100vh">
+    <canvas *ngIf="mostrarGrafica" #chart baseChart class="chart" [colors]="lineChartColors"
+    [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="true"
+    [chartType]="'line'"></canvas>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor [ngForOf]="dias" let-dia>
+          <tr (click)="dia.mostrarDetalle = !dia.mostrarDetalle" style="cursor: pointer">
+              <td>{{ dia.fecha | date:'dd-MM-yyyy' }}</td>
+              <td>{{ dia.saldo | currency:'MXN':true }}</td>
+          </tr>
+          <ng-template [ngIf]="dia.mostrarDetalle">
+            <tr>
+              <td>Gastos</td>
+              <td>{{ -dia.gastos  | currency:'MXN':true}}</td>
+            </tr>
+            <tr *ngFor="let percepcion of dia.percepciones.detalle">
+              <td>{{ percepcion.descripcion }}</td>
+              <td>{{ percepcion.importe  | currency:'MXN':true}}</td>
+            </tr>
+          </ng-template>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>

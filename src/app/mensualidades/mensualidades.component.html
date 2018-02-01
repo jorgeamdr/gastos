@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Núm. pago</th>
+      <th>Total pagos</th>
+      <th>Descripción</th>
+      <th style = "text-align: right">Mensualidad</th>
+      <th style = "text-align: right">Total Crédito</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let mensualidad of mensualidades">
+      <td>{{ mensualidad.fechaMensualidad | date:'dd-MM-yyyy'}}</td>
+      <td>{{ mensualidad.periodoPago }}</td>
+      <td>{{ mensualidad.cantidadPagos }}</td>
+      <td>{{ mensualidad.descripcion }}</td>
+      <td style = "text-align: right">{{ mensualidad.importeMensual | currency:'MXN':true }}</td>
+      <td style = "text-align: right">{{ mensualidad.importeTotal | currency:'MXN':true }}</td>
+    </tr>
+  </tbody>
+</table>

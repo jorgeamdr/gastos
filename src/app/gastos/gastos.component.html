@@ -1,0 +1,24 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Descripción</th>
+      <th style = "text-align: right">Importe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor [ngForOf]="gastos" let-dia>
+      <tr style="font-weight: bold">
+        <td colspan="2">{{ dia.fecha | date: 'EEE dd-MM-yyyy' }}</td>
+        <td style="text-align: right">{{ dia.total | currency:'MXN':true }}</td>
+      </tr>
+      <ng-template ngFor [ngForOf]="dia.gastos" let-gasto>
+      <tr>
+          <td>{{ gasto.Fecha | date:'shortTime' }}</td>
+          <td>{{ gasto.Descripcion }}</td>
+          <td style="text-align: right">{{ gasto.Importe | currency:'MXN':true }}</td>
+      </tr>
+  </ng-template>
+  </ng-template>
+  </tbody>
+</table>

@@ -1,0 +1,18 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Cuenta</th>
+        <th style = "text-align: right">Saldo al corte</th>
+        <th>Fecha de corte</th>
+        <th style = "text-align: right">Saldo actual calculado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let saldo of saldos">
+        <td>{{ saldo.IdCuenta }}</td>
+          <td style = "text-align: right">{{ saldo.Saldo | currency:'MXN':true }}</td>
+        <td>{{ saldo.Fecha | date:'dd-MM-yyyy'}}</td>
+        <td style = "text-align: right">{{ (saldo.Saldo - saldo.Gastos) | currency:'MXN':true }}</td>
+      </tr>
+    </tbody>
+  </table>
