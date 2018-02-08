@@ -7,6 +7,25 @@
     </tr>
   </thead>
   <tbody>
+    <ng-template ngFor [ngForOf]="gastos" let-gasto>
+      <tr style="font-weight: bold">
+        <td>{{ gasto.fecha }}</td>
+        <td>{{ gasto.descripcion }}</td>
+        <td style="text-align: right">{{ gasto.importe | currency:'MXN':true }}</td>
+      </tr>
+  </ng-template>
+  </tbody>
+</table>
+
+<!--<table class="table">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Descripción</th>
+      <th style = "text-align: right">Importe</th>
+    </tr>
+  </thead>
+  <tbody>
     <ng-template ngFor [ngForOf]="gastos" let-dia>
       <tr style="font-weight: bold">
         <td colspan="2">{{ dia.fecha | date: 'EEE dd-MM-yyyy' }}</td>
@@ -21,4 +40,4 @@
   </ng-template>
   </ng-template>
   </tbody>
-</table>
+</table>-->

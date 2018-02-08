@@ -4,6 +4,8 @@ import * as mysql from 'mysql';
 import * as moment from 'moment';
 import * as compression from 'compression';
 
+import * as controllers from './controllers';
+
 const createDbConnection = () => mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
@@ -14,7 +16,7 @@ const createDbConnection = () => mysql.createConnection({
 
 const app = express();
 const apiRouter = express.Router();
-
+/*
 apiRouter.get('/gastos', (req, res, next) => {
     const conn = createDbConnection();
     conn.connect();
@@ -431,12 +433,14 @@ apiRouter.get('/pronostico', (req, res, next) => {
 
     conn.end();
 });
-
+*/
 app.use(compression());
+
+apiRouter.use('/gastos', controllers.GastosController.getRouter());
+
 app.use('/api', apiRouter);
-app.use(express.static(__dirname), (err, req, res, next) => {
-    res.send('hola');
-});
+app.use(express.static(__dirname));
+
 app.get('*', (req, res, next) => {
     res.sendFile(__dirname + '/index.html');
 });

@@ -55,6 +55,7 @@ export class GastosComponent implements OnInit {
   }*/
 
   async cargarGastos() {
-    this.gastos = await this._http.get('api/gastos-diarios').map(d => d.json() as Array<any>).toPromise();
+    //this.gastos = await this._http.get('api/gastos-diarios').map(d => d.json() as Array<any>).toPromise();
+    this.gastos = await this._http.get('api/gastos').map(d => d.json() as Array<any>).toPromise();
   }
 }
