@@ -1,20 +1,48 @@
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Fecha</th>
       <th>Descripción</th>
       <th style = "text-align: right">Importe</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <ng-template ngFor [ngForOf]="gastos" let-gasto>
-      <tr style="font-weight: bold">
-        <td>{{ gasto.fecha }}</td>
+      <tr style="font-weight: bold" *ngIf="gasto.id !== gastoEdicion?.id">
+        <td>{{ gasto.fecha | date }}</td>
         <td>{{ gasto.descripcion }}</td>
-        <td style="text-align: right">{{ gasto.importe | currency:'MXN':true }}</td>
+        <td class="text-right">{{ gasto.importe | currency:'MXN':true }}</td>
+        <td class="text-right">
+          <button type="button" class="btn btn-primary" (click)="editarGasto(gasto)"><span class="material-icons">create</span></button>
+          &nbsp;
+          <button type="button" class="btn btn-danger" (click)="eliminarGasto(gasto)"><span class="material-icons">delete</span></button>
+        </td>
       </tr>
-  </ng-template>
+      <tr style="font-weight: bold" *ngIf="gasto.id === gastoEdicion?.id">
+        <td><input class="form-control" type="datetime-local" name="gastoEdicion.fecha" [(ngModel)]="gastoEdicion.fecha" /></td>
+        <td><input class="form-control" type="text" name="gastoEdicion.descripcion" [(ngModel)]="gastoEdicion.descripcion" /></td>
+        <td><input class="form-control" type="number" name="gastoEdicion.importe" [(ngModel)]="gastoEdicion.importe" step="0.01" /></td>
+        <td class="text-right">
+          <button type="button" class="btn btn-primary" (click)="guardarGasto(gasto)"><span class="material-icons">done</span></button>
+          &nbsp;
+          <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()"><span class="material-icons">restore</span></button>
+        </td>
+      </tr>
+    </ng-template>
   </tbody>
+  <tfoot>
+    <tr>
+      <td><input class="form-control" type="datetime-local" name="nuevoGasto.fecha" [(ngModel)]="nuevoGasto.fecha" /></td>
+      <td><input class="form-control" type="text" name="nuevoGasto.descripcion" [(ngModel)]="nuevoGasto.descripcion" /></td>
+      <td><input class="form-control" type="number" name="nuevoGasto.importe" [(ngModel)]="nuevoGasto.importe" step="0.01" /></td>
+      <td class="text-right">
+        <button type="button" class="btn btn-primary" (click)="guardarNuevoGasto()"><span class="material-icons">done</span></button>
+        &nbsp;
+        <button type="button" class="btn btn-secondary" (click)="resetNuevoGasto()"><span class="material-icons">restore</span></button>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 
 <!--<table class="table">

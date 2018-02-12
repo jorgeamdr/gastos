@@ -2,6 +2,7 @@ import * as http from 'http';
 import * as express from 'express';
 import * as mysql from 'mysql';
 import * as moment from 'moment';
+import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 
 import * as controllers from './controllers';
@@ -436,6 +437,7 @@ apiRouter.get('/pronostico', (req, res, next) => {
 */
 app.use(compression());
 
+apiRouter.use(bodyParser.json());
 apiRouter.use('/gastos', controllers.GastosController.getRouter());
 
 app.use('/api', apiRouter);

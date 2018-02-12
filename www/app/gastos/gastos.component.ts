@@ -12,11 +12,56 @@ import 'rxjs/add/operator/toPromise';
 export class GastosComponent implements OnInit {
 
   public gastos: Array<any>;
+  public nuevoGasto: any;
+  public gastoEdicion: any;
 
   constructor(private _http: Http) { }
 
   ngOnInit() {
+    this.resetNuevoGasto();
     this.cargarGastos();
+  }
+
+  resetNuevoGasto() {
+    this.nuevoGasto = {
+      fecha: moment().local().format('YYYY-MM-DDTHH:mm:ss')
+    };
+  }
+
+  async guardarNuevoGasto() {
+    const res = await this._http.post('api/gastos', this.nuevoGasto).map(d => d.json()).toPromise();
+    this.nuevoGasto.id = res.id;
+
+    this.gastos.push({...this.nuevoGasto});
+    this.resetNuevoGasto();
+  }
+
+  editarGasto(gasto) {
+    this.gastoEdicion = {
+      ...gasto,
+      fecha: moment(gasto.fecha).local().format('YYYY-MM-DDTHH:mm:ss')
+    };
+  }
+
+  async guardarGasto(gasto) {
+    const res = await this._http.put(`api/gastos/${this.gastoEdicion.id}`, this.gastoEdicion).toPromise();
+
+    gasto.fecha = this.gastoEdicion.fecha;
+    gasto.descripcion = this.gastoEdicion.descripcion;
+    gasto.importe = this.gastoEdicion.importe;
+
+    this.cancelarEdicion();
+  }
+
+  cancelarEdicion() {
+    this.gastoEdicion = null;
+  }
+
+  async eliminarGasto(gasto) {
+    if (window.confirm("Confirma que desea eliminar?")){
+      await this._http.delete(`api/gastos/${gasto.id}`).toPromise();
+      this.gastos.splice(this.gastos.indexOf(gasto), 1);
+    }
   }
   /*
   async cargarGastos() {

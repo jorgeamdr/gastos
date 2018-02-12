@@ -2,9 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { NgForOf } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { FormsModule } from '@angular/forms';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppComponent } from './app.component';
 import { GastosComponent } from './gastos/gastos.component';
@@ -31,7 +33,8 @@ import { AltaComponent } from './alta/alta.component';
     HttpModule,
     NgbModule.forRoot(),
     ChartsModule,
-    FormsModule
+    FormsModule,
+    LoadingBarHttpModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-MX' }
