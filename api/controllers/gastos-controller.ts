@@ -17,8 +17,6 @@ export class GastosController {
     }
 
     constructor () {
-        let x = express();
-
         this.routes.get('/', async (req, res, next) => {
             try {
                 res.send(await this.Get({...req.params}));
@@ -49,7 +47,7 @@ export class GastosController {
                 next(err);
             }
         });
-        
+
         this.routes.delete('/:id', async (req, res, next) => {
             if (isNaN(+req.params.id)) {
                 res.sendStatus(400);
@@ -57,7 +55,7 @@ export class GastosController {
             }
 
             try {
-                await this.Delete(req.params.id)
+                await this.Delete(req.params.id);
                 res.sendStatus(200);
             } catch (err) {
                 console.log(err);
@@ -69,7 +67,9 @@ export class GastosController {
     // @get()
     public async Get (params: any) {
         const MovimientoContext = context.getModels(this.db).Movimiento;
-        return await MovimientoContext.findAll();
+        return await MovimientoContext.findAll({
+          order: [['fecha', 'asc']]
+        });
     }
 
     public async Post (movimientos: models.Movimiento|Array<models.Movimiento>) {
@@ -83,8 +83,8 @@ export class GastosController {
                 fecha: movimiento.fecha,
                 descripcion: movimiento.descripcion,
                 notas: movimiento.notas
-            }).then(movimiento => ({
-                id: movimiento.id
+            }).then(mov => ({
+                id: mov.id
             }));
         } else {
             return await MovimientoContext.bulkCreate(
@@ -98,7 +98,7 @@ export class GastosController {
         }
     }
 
-    public async Put (movimiento: models.Movimiento) {     
+    public async Put (movimiento: models.Movimiento) {
         const MovimientoContext = context.getModels(this.db).Movimiento;
 
         return MovimientoContext.update({
@@ -109,8 +109,8 @@ export class GastosController {
             where: { id: movimiento.id}
         });
     }
-    
-    public async Delete (id: number) {     
+
+    public async Delete (id: number) {
         const MovimientoContext = context.getModels(this.db).Movimiento;
 
         return MovimientoContext.destroy({

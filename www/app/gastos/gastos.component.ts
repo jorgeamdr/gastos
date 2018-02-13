@@ -58,7 +58,7 @@ export class GastosComponent implements OnInit {
   }
 
   async eliminarGasto(gasto) {
-    if (window.confirm("Confirma que desea eliminar?")){
+    if (window.confirm('Confirma que desea eliminar?')) {
       await this._http.delete(`api/gastos/${gasto.id}`).toPromise();
       this.gastos.splice(this.gastos.indexOf(gasto), 1);
     }
@@ -100,7 +100,7 @@ export class GastosComponent implements OnInit {
   }*/
 
   async cargarGastos() {
-    //this.gastos = await this._http.get('api/gastos-diarios').map(d => d.json() as Array<any>).toPromise();
+    // this.gastos = await this._http.get('api/gastos-diarios').map(d => d.json() as Array<any>).toPromise();
     this.gastos = await this._http.get('api/gastos').map(d => d.json() as Array<any>).toPromise();
   }
 }

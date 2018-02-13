@@ -41,6 +41,7 @@
     "@types/mysql": "0.0.34",
     "@types/node": "~6.0.60",
     "@types/sequelize": "^4.27.4",
+    "autoprefixer": "^8.0.0",
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.0",
