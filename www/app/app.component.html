@@ -8,11 +8,17 @@
 </div>
 
 <ngb-tabset>
-    <ngb-tab title="Listado">
-      <ng-template ngbTabContent>
-          <app-gastos></app-gastos>
-        </ng-template>
-    </ngb-tab>
+  <ngb-tab title="Listado">
+    <ng-template ngbTabContent>
+        <app-gastos></app-gastos>
+      </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Gráficas">
+    <ng-template ngbTabContent>
+        <app-graficas></app-graficas>
+      </ng-template>
+  </ngb-tab>
+    <!--
     <ngb-tab title="Saldos">
         <ng-template ngbTabContent>
             <app-saldos></app-saldos>
@@ -23,12 +29,14 @@
             <app-mensualidades></app-mensualidades>
           </ng-template>
     </ngb-tab>
+  -->
     <!--
     <ngb-tab title="Resumen">
       <ng-template ngbTabContent>
           <app-gastos-diarios></app-gastos-diarios>
         </ng-template>
     </ngb-tab>-->
+    <!--
     <ngb-tab title="Pronóstico">
       <ng-template ngbTabContent>
         <app-pronostico></app-pronostico>
@@ -39,4 +47,5 @@
         <app-alta></app-alta>
       </ng-template>
     </ngb-tab>
+  -->
 </ngb-tabset>

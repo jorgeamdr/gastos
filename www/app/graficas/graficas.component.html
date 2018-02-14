@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label class="col-xs-6 col-sm-3 control-label" for="filtro.fechaInicio">Inicio: </label>
+        <div class="col-xs-6 col-sm-3">
+          <input id="filtro.fechaInicio" name="filtro.fechaInicio" class="form-control" type="month" [(ngModel)]="filtro['fechaInicio']" />
+        </div>
+
+        <label class="col-xs-6 col-sm-3 control-label" for="filtro.fechaFin">Fin: </label>
+        <div class="col-xs-6 col-sm-3">
+          <input id="filtro.fechaFin" name="filtro.fechaFin" class="form-control" type="month" [(ngModel)]="filtro['fechaFin']" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

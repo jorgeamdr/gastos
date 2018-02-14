@@ -17,6 +17,7 @@ import { LOCALE_ID } from '@angular/core';
 import { SaldosComponent } from './saldos/saldos.component';
 import { MensualidadesComponent } from './mensualidades/mensualidades.component';
 import { AltaComponent } from './alta/alta.component';
+import { GraficasComponent } from './graficas/graficas.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AltaComponent } from './alta/alta.component';
     PronosticoComponent,
     SaldosComponent,
     MensualidadesComponent,
-    AltaComponent
+    AltaComponent,
+    GraficasComponent
   ],
   imports: [
     BrowserModule,

@@ -328,7 +328,7 @@ apiRouter.get('/pronostico', (req, res, next) => {
                     dia.fecha = moment(dias[i - 1].fecha).add(1, 'day');
                     dia.saldo = dias[i - 1].saldoFinal;
                     dia.ahorro = dias[i - 1].ahorroFinal * (1 + (4 / 100 / 365));
-    
+
                     dia.tarjetas = {};
                     tarjetasCuenta.forEach(t => dia.tarjetas[t.nombre] = {
                         saldo: dias[i - 1].tarjetas[t.nombre].saldoFinal
@@ -338,7 +338,7 @@ apiRouter.get('/pronostico', (req, res, next) => {
                     total: 0,
                     detalle: []
                 };
-    
+
                 // movimientos unicos
                 dia.percepciones.detalle = dia.percepciones.detalle.concat(
                     movimientosUnicosCuenta.filter(m => dia.fecha.isSame(m.fecha, 'day')).map(m => ({
@@ -368,21 +368,21 @@ apiRouter.get('/pronostico', (req, res, next) => {
                         importe: m.importe
                     }))
                 );
-    
+
                 dia.percepciones.total = dia.percepciones.detalle.reduce((a, b) => a + b.importe, 0);
                 dia.aportacionAhorro = dia.percepciones.total * 0.1;
                 // dia.aportacionAhorro = Math.max(Math.min(20000 - dia.ahorro, dia.percepciones.total * 0.1), 0);
                 dia.ahorroFinal = dia.ahorro + dia.aportacionAhorro;
-    
+
                 dia.gastos = promediosDia.find(p => dia.fecha.isoWeekday() === p.dia).gastosNoEspeciales;
                 dia.hipoteca = dia.fecha.date() === 3 ? 9800 : 0;
-    
+
                 dia.disponibleDeudas = Math.max(
                     dia.saldo + dia.percepciones.total
                         - (dia.aportacionAhorro + 9800 + (promediosDia.reduce(
                             (a, b) => a + b.gastosNoEspeciales, 0) / promediosDia.length) * 30),
                     0);
-    
+
                 // operaciones de tarjetas de credito
                 tarjetasCuenta.forEach(t => {
                     // suma de intereses
@@ -393,7 +393,7 @@ apiRouter.get('/pronostico', (req, res, next) => {
                         dia.tarjetas[t.nombre].intereses = 0;
                         // dia.interesesLight = 0;
                     }
-    
+
                     // suma de mensualidades
                     if ( moment(dia.fecha).subtract(20, 'days').set('D', t.fechaCorte).add(20, 'days').isSame(dia.fecha)) {
                         dia.tarjetas[t.nombre].mensualidades = mensualidades
@@ -407,7 +407,7 @@ apiRouter.get('/pronostico', (req, res, next) => {
                         dia.tarjetas[t.nombre].minimo = 0;
                         dia.tarjetas[t.nombre].disponiblePago = 0;
                     }
-    
+
                     dia.tarjetas[t.nombre].totalPagar = Math.min(
                         dia.tarjetas[t.nombre].saldo + dia.tarjetas[t.nombre].mensualidades,
                         Math.max(dia.tarjetas[t.nombre].disponiblePago, dia.tarjetas[t.nombre].minimo + dia.tarjetas[t.nombre].mensualidades));
@@ -415,8 +415,8 @@ apiRouter.get('/pronostico', (req, res, next) => {
                         dia.tarjetas[t.nombre].saldo + dia.tarjetas[t.nombre].intereses +
                         dia.tarjetas[t.nombre].mensualidades - dia.tarjetas[t.nombre].totalPagar;
                 });
-    
-    
+
+
                 dia.saldoFinal = +(dia.saldo + dia.percepciones.total - dia.aportacionAhorro
                     - dia.gastos - dia.hipoteca - Object.keys(dia.tarjetas).reduce((a, b) => a + dia.tarjetas[b].totalPagar, 0)).toFixed(2);
                 dias.push(dia);
@@ -424,10 +424,10 @@ apiRouter.get('/pronostico', (req, res, next) => {
                     break;
                 }
             }
-    
+
             dias = dias.filter(d => d.fecha.isSameOrAfter(fechaInicio, 'day'));
         // });
-        
+
         // res.send(cuentas);
         res.send(dias);
     });
@@ -439,6 +439,7 @@ app.use(compression());
 
 apiRouter.use(bodyParser.json());
 apiRouter.use('/gastos', controllers.GastosController.getRouter());
+apiRouter.use('/reportes', controllers.ReportesController.getRouter());
 
 app.use('/api', apiRouter);
 app.use(express.static(__dirname));
