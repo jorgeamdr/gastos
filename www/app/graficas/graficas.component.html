@@ -4,14 +4,38 @@
       <div class="form-group">
         <label class="col-xs-6 col-sm-3 control-label" for="filtro.fechaInicio">Inicio: </label>
         <div class="col-xs-6 col-sm-3">
-          <input id="filtro.fechaInicio" name="filtro.fechaInicio" class="form-control" type="month" [(ngModel)]="filtro['fechaInicio']" />
+          <input id="filtro.fechaInicio" name="filtro.fechaInicio" class="form-control" type="month"
+              [(ngModel)]="filtro['fechaInicio']" (change)="obtenerGastosDiarios()" />
         </div>
 
         <label class="col-xs-6 col-sm-3 control-label" for="filtro.fechaFin">Fin: </label>
         <div class="col-xs-6 col-sm-3">
-          <input id="filtro.fechaFin" name="filtro.fechaFin" class="form-control" type="month" [(ngModel)]="filtro['fechaFin']" />
+          <input id="filtro.fechaFin" name="filtro.fechaFin" class="form-control" type="month"
+              [(ngModel)]="filtro['fechaFin']"  (change)="obtenerGastosDiarios()"/>
         </div>
       </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dia of gastosDiarios">
+            <td>{{ dia.fecha | date:'EEE dd MMM yyyy' }}</td>
+            <td>{{ dia.importe | currency:'MXN':true  }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="position: relative; height: 100vh">
+      <canvas *ngIf="gastosDiariosChartData" #chart baseChart class="chart"
+      [datasets]="gastosDiariosChartData" [labels]="gastosDiariosLabels" [legend]="true"
+      [chartType]="'line'"></canvas>
     </div>
   </div>
 </div>

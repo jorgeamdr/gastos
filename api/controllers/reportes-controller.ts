@@ -58,7 +58,6 @@ export class ReportesController {
           , 0)
         }));
 
-
         return movimientosDiarios;
     }
 }
