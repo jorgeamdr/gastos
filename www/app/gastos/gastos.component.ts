@@ -29,11 +29,14 @@ export class GastosComponent implements OnInit {
   }
 
   async guardarNuevoGasto() {
-    const res = await this._http.post('api/gastos', this.nuevoGasto).map(d => d.json()).toPromise();
+    const gastoGuardar = {...this.nuevoGasto};
+    gastoGuardar.fecha = this.offsetLocalToUTC(gastoGuardar.fecha).toISOString();
+    const res = await this._http.post('api/gastos', gastoGuardar).map(d => d.json()).toPromise();
     this.nuevoGasto.id = res.id;
 
     this.gastos.push({...this.nuevoGasto});
     this.resetNuevoGasto();
+    this.ordernarGastos();
   }
 
   editarGasto(gasto) {
@@ -43,14 +46,25 @@ export class GastosComponent implements OnInit {
     };
   }
 
-  async guardarGasto(gasto) {
-    const res = await this._http.put(`api/gastos/${this.gastoEdicion.id}`, this.gastoEdicion).toPromise();
+  offsetLocalToUTC(fecha: string): moment.Moment {
+    return moment(fecha); // .subtract((moment(fecha)).utcOffset(), 'm');
+  }
 
-    gasto.fecha = this.gastoEdicion.fecha;
+  async guardarGasto(gasto) {
+    const gastoGuardar = {...this.gastoEdicion};
+    gastoGuardar.fecha = this.offsetLocalToUTC(gastoGuardar.fecha).toISOString();
+    const res = await this._http.put(`api/gastos/${gastoGuardar.id}`, gastoGuardar).toPromise();
+
+    gasto.fecha = moment(this.gastoEdicion.fecha).toISOString();
     gasto.descripcion = this.gastoEdicion.descripcion;
     gasto.importe = this.gastoEdicion.importe;
 
+    console.log('gastoEdicion', this.gastoEdicion);
+    console.log('gastoGuardar', gastoGuardar);
+    console.log('gastoEdicion', gasto);
+
     this.cancelarEdicion();
+    this.ordernarGastos();
   }
 
   cancelarEdicion() {
@@ -62,6 +76,14 @@ export class GastosComponent implements OnInit {
       await this._http.delete(`api/gastos/${gasto.id}`).toPromise();
       this.gastos.splice(this.gastos.indexOf(gasto), 1);
     }
+  }
+
+  ordernarGastos() {
+    // Ordenar de más reciente a más antiguo
+    this.gastos = this.gastos.sort((a, b) => {
+      // console.log({a, b});
+      return b.fecha.localeCompare(a.fecha);
+    });
   }
   /*
   async cargarGastos() {
@@ -102,5 +124,6 @@ export class GastosComponent implements OnInit {
   async cargarGastos() {
     // this.gastos = await this._http.get('api/gastos-diarios').map(d => d.json() as Array<any>).toPromise();
     this.gastos = await this._http.get('api/gastos').map(d => d.json() as Array<any>).toPromise();
+    this.ordernarGastos();
   }
 }

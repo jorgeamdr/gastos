@@ -40,7 +40,7 @@ export class GraficasComponent implements OnInit {
 
 
 
-    this.gastosDiariosLabels = this.gastosDiarios.map(d => moment(d.fecha).local().format('DD-MMM')),
+    this.gastosDiariosLabels = this.gastosDiarios.map(d => moment(d.fecha).format('DD-MMM')),
     this.gastosDiariosChartData = [
       {
         data: this.gastosDiarios.map(d => d.importe),

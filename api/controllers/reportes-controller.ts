@@ -44,7 +44,7 @@ export class ReportesController {
 
         const dias = [];
         movimientos.forEach(movimiento => {
-          const dia = moment(movimiento.fecha).startOf('day').toISOString();
+          const dia = moment(movimiento.fecha).startOf('day').format('YYYY-MM-DD');
           if (dias.indexOf(dia) === -1) {
             dias.push(dia);
           }
@@ -52,7 +52,7 @@ export class ReportesController {
         const movimientosDiarios = dias.map(dia => ({
           fecha: dia,
           importe: movimientos.filter(movimiento =>
-            moment(movimiento.fecha).startOf('day').toISOString() === dia
+            moment(movimiento.fecha).startOf('day').format('YYYY-MM-DD') === dia
           ).reduce((sum, movimiento) =>
             sum + (+movimiento.importe)
           , 0)
